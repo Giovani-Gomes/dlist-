@@ -1,5 +1,6 @@
 package com.devgiovani.dslist2.services;
 
+import com.devgiovani.dslist2.Projection.GameMinProjection;
 import com.devgiovani.dslist2.dto.GameDTO;
 import com.devgiovani.dslist2.dto.GameMinDTO;
 import com.devgiovani.dslist2.entities.Game;
@@ -27,5 +28,13 @@ public class GameService {
         List<Game> result = gameRepository.findAll();
         return result.stream().map(x -> new GameMinDTO(x)).toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId){
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream().map(x -> new GameMinDTO(x)).toList();
+    }
+
+
 
 }
